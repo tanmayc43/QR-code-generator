@@ -23,8 +23,6 @@ const setBackgroundImage = async () => {
   }
 };
 
-setBackgroundImage();
-
 document.addEventListener('DOMContentLoaded', () => {
   setBackgroundImage();
 });
