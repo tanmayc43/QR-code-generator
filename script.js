@@ -6,31 +6,27 @@ const wrapper = document.querySelector(".wrapper"),
 let preValue = "";
 
 const setBackgroundImage = async () => {
-  const apiUrl = "https://api.unsplash.com/photos/random?orientation=landscape&query=nature";
-
   try {
-    const response = await fetch(apiUrl, {
-      headers: {
-        Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}`,
-      },
-    });
-
-    if (!response.ok) throw new Error("Failed to fetch image from Unsplash.");
-
+    const response = await fetch('/api/fetchImage');
+    if (!response.ok) {
+      throw new Error('Error fetching image');
+    }
     const data = await response.json();
-    document.body.style.backgroundImage = `url(${data.urls.full})`;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundImage = `url(${data.imageUrl})`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
   } catch (error) {
-    console.error("Error fetching Unsplash background:", error);
-
+    console.error('Error fetching Unsplash background:', error);
     document.body.style.backgroundImage = "url('./assets/background.jpg')";
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundRepeat = "no-repeat";
   }
 };
+
+setBackgroundImage();
+
+document.addEventListener('DOMContentLoaded', () => {
+  setBackgroundImage();
+});
 
 generateBtn.addEventListener("click", () => {
   const qrValue = qrInput.value.trim();
@@ -56,5 +52,3 @@ qrInput.addEventListener("input", () => {
     preValue = "";
   }
 });
-
-setBackgroundImage();
