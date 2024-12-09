@@ -6,19 +6,23 @@ const wrapper = document.querySelector(".wrapper"),
 let preValue = "";
 
 const setBackgroundImage = async () => {
+  const currentBackground = document.body.style.backgroundImage;
+
   try {
-    const response = await fetch('/api/fetchImage');
-    if (!response.ok) {
-      throw new Error('Error fetching image');
-    }
-    const data = await response.json();
-    document.body.style.backgroundImage = `url(${data.imageUrl})`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
+      const response = await fetch('/api/fetchImage');
+      if (!response.ok) {
+          throw new Error('Error fetching image');
+      }
+      const data = await response.json();
+      
+      document.body.style.backgroundImage = `url(${data.imageUrl})`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
   } catch (error) {
-    console.error('Error fetching Unsplash background:', error);
-    document.body.style.backgroundImage = "url('./assets/background.jpg')";
+      console.error('Error fetching Unsplash background:', error);
+      alert('Failed to fetch background image. Please try again.');
+      document.body.style.backgroundImage = currentBackground;
   }
 };
 
