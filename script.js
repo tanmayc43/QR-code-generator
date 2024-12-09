@@ -6,7 +6,6 @@ const wrapper = document.querySelector(".wrapper"),
 let preValue = "";
 
 const setBackgroundImage = async () => {
-  document.body.style.backgroundColor = 'black';
   try {
     const response = await fetch('/api/fetchImage');
     if (!response.ok) {
